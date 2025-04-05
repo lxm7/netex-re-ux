@@ -26,7 +26,7 @@ const Header = () => {
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
                 Solutions <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+              <DropdownMenuContent className="p-2" align="start">
                 <DropdownMenuItem>
                   <a href="/solutions/netex-cloud" className="flex flex-col">
                     <span className="font-medium">Netex Cloud</span>
@@ -105,7 +105,7 @@ const Header = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
-              <nav className="flex flex-col gap-4 mt-8">
+              <nav className="flex flex-col gap-4 p-6">
                 <a href="/solutions" className="text-lg font-medium">
                   Solutions
                 </a>

@@ -73,7 +73,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
           <h1
             className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-white"
             style={{
-              transform: `translateY(${-translateY * 0.2}px)`,
+              transform: `translateY(${-translateY * 2}px)`,
               transition: "transform 0.1s ease-out",
             }}
           >
@@ -82,7 +82,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
           <p
             className="text-lg text-gray-200 md:text-xl"
             style={{
-              transform: `translateY(${-translateY * 0.1}px)`,
+              transform: `translateY(${-translateY * 1.75}px)`,
               transition: "transform 0.1s ease-out",
             }}
           >
@@ -93,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
           <div
             className="flex flex-col sm:flex-row gap-4 pt-4"
             style={{
-              transform: `translateY(${-translateY * 0.05}px)`,
+              transform: `translateY(${-translateY * 1.5}px)`,
               transition: "transform 0.1s ease-out",
             }}
           >

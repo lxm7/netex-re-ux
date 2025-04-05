@@ -38,11 +38,11 @@ function App() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-hidden">
       {/* Fixed header that always stays on top */}
-      <Header // className="fixed top-0 left-0 right-0 z-50"
-      />
-      <main className="flex-1">
+      <Header />
+
+      <main className="flex-1 overflow-x-hidden w-full">
         {/* Hero section with video background - fixed position */}
         <div
           className="fixed top-0 left-0 w-full h-screen z-10"
@@ -56,37 +56,39 @@ function App() {
         {/* Spacer div to create scrollable content height */}
         <div style={{ height: `${heroHeight}vh` }}></div>
 
-        <div
-          className="relative z-30"
-          style={{
-            transform: `translateY(${-30 + scrollY * 0.1}px)`,
-          }}
-        >
-          <AnimatedSection
-            direction="right"
-            className="py-16 border-b bg-white"
+        {/* First section - Solutions */}
+        <div className="relative z-30 w-full overflow-hidden">
+          <div
+            className="w-full"
             style={{
               opacity: Math.min(1, scrollY / (window.innerHeight * 0.5)),
               transform: `translateY(${Math.max(0, 50 - scrollY * 0.1)}px)`,
             }}
           >
-            <SolutionsSection />
-          </AnimatedSection>
+            <AnimatedSection
+              direction="bottom" // Changed from right to bottom to avoid horizontal overflow
+              className="py-16 border-b bg-white w-full"
+            >
+              <SolutionsSection />
+            </AnimatedSection>
+          </div>
         </div>
 
         {/* Remaining sections */}
         <div
-          className="relative z-40 bg-white"
+          className="relative z-40 bg-white w-full overflow-hidden"
           style={{
-            transform: `translateY(${(1 - nextSectionProgress) * -50}px)`,
             opacity: nextSectionProgress,
           }}
         >
-          <AnimatedSection direction="left" className="py-24 bg-white">
+          <AnimatedSection direction="bottom" className="py-24 bg-white w-full">
             <ClientLogos />
           </AnimatedSection>
 
-          <AnimatedSection direction="right" className="py-24 bg-gray-50">
+          <AnimatedSection
+            direction="bottom"
+            className="py-24 bg-gray-50 w-full"
+          >
             <CtaSection />
           </AnimatedSection>
         </div>
