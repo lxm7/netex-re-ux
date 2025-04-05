@@ -1,0 +1,13 @@
+/* Add custom styles for the parallax effect */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Create a stacking context for proper z-index handling */
+.relative {
+  position: relative;
+}
