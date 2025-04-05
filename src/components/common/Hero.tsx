@@ -1,7 +1,7 @@
 import type React from "react";
+import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Video from "@/assets/video-bg.mov";
-import { useRef, useEffect } from "react";
 
 interface HeroProps {
   scrollY: number;
@@ -9,9 +9,24 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ scrollY }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // --- Parallax calculations removed or disabled based on reduceMotion ---
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  // Check for prefers-reduced-motion setting
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduceMotion(mediaQuery.matches);
+
+    const handleChange = () => {
+      setReduceMotion(mediaQuery.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   // Calculate parallax effect
-  const translateY = scrollY * 0.3;
+  const translateY = reduceMotion ? 0 : scrollY * 0.3;
 
   // Preload video when component mounts
   useEffect(() => {
@@ -22,14 +37,14 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
 
   return (
     <section
+      aria-label="Hero introduction"
       className="relative overflow-hidden"
       style={{
-        height: "calc(100vh - 65px)",
-        marginTop: "65px",
+        height: "100vh",
       }}
     >
       {/* Video background - fixed position, no parallax */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <div className="absolute inset-0 w-full h-full">
           <video
             ref={videoRef}
@@ -48,8 +63,9 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
       {/* Black overlay with subtle parallax effect */}
       <div
         className="absolute inset-0 bg-black z-10"
+        aria-hidden="true"
         style={{
-          opacity: 0.6,
+          opacity: 0.75,
           transform: `translateY(${translateY * -0.2}px)`,
           transition: "transform 0.1s ease-out",
         }}
@@ -58,6 +74,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
       {/* SVG Background with parallax effect */}
       <div
         className="absolute inset-0 z-5"
+        aria-hidden="true"
         style={{
           transform: `translateY(${translateY}px)`,
           transition: "transform 0.1s ease-out",
@@ -68,10 +85,10 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-full z-20 flex flex-col justify-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-full z-20 flex flex-col justify-center mt-[45px]">
         <div className="max-w-2xl space-y-6">
           <h1
-            className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl text-white"
+            className="font-sans text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl text-white"
             style={{
               transform: `translateY(${-translateY * 2}px)`,
               transition: "transform 0.1s ease-out",
@@ -80,7 +97,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
             Transform Corporate Learning with Integrated E-Learning Solutions
           </h1>
           <p
-            className="text-lg text-gray-200 md:text-xl"
+            className="text-xl text-gray-200 md:text-xl"
             style={{
               transform: `translateY(${-translateY * 1.75}px)`,
               transition: "transform 0.1s ease-out",
@@ -97,15 +114,15 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
               transition: "transform 0.1s ease-out",
             }}
           >
-            <Button size="lg" className="font-medium">
-              Request a Demo
-            </Button>
             <Button
               variant="outline"
               size="lg"
-              className="bg-white/10 text-white border-white/20 hover:bg-white/20 hover:text-white"
+              className="text-md bg-white/10 text-white border-white/20 hover:bg-white/20 hover:text-white focus-visible:ring-white"
             >
               Explore Platforms
+            </Button>
+            <Button size="lg" className="text-md font-medium">
+              Request a Demo
             </Button>
           </div>
         </div>

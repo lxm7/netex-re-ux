@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react"; // Added useEffect, useRef
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,23 +11,64 @@ import { ChevronDown, Menu, Globe } from "lucide-react";
 import Logo from "./Logo";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Ref for the mobile menu trigger button
+  const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
+
+  // Inside your Header component:
+  const [currentLang, setCurrentLang] = useState<"EN" | "ES">("EN"); // Example state for current language
+
+  // Function to handle language change (replace console.log with actual logic)
+  const handleLangChange = (lang: "EN" | "ES") => {
+    setCurrentLang(lang);
+    // TODO: Implement actual language switching logic here
+    // (e.g., using i18next, react-intl, or custom context)
+    console.log(`Language changed to ${lang}`);
+  };
+
+  // Focus management: Return focus to menu button when sheet closes
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      // Small delay to allow sheet closing animation
+      const timer = setTimeout(() => {
+        mobileMenuTriggerRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobileMenuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    // Added role="banner" for clarity, though <header> implies it
+    <header
+      role="banner"
+      className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
         <div className="flex items-center gap-6 md:gap-10">
-          <a href="/" className="flex items-center space-x-2">
-            <Logo />
+          {/* Added aria-label for homepage link clarity */}
+          <a
+            href="/"
+            className="flex items-center space-x-2"
+            aria-label="netex homepage"
+          >
+            <Logo aria-hidden="true" /> {/* Hide decorative logo from AT */}
             <span className="font-bold text-xl">netex</span>
           </a>
-          <nav className="hidden md:flex gap-6">
+          {/* Added aria-label to distinguish main navigation */}
+          <nav aria-label="Main navigation" className="hidden md:flex gap-6">
+            {/* Solutions Dropdown */}
             <DropdownMenu>
+              {/* Button has implicit aria-haspopup="true" from Shadcn */}
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
-                Solutions <ChevronDown className="h-4 w-4" />
+                Solutions
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />{" "}
+                {/* Hide decorative icon */}
               </DropdownMenuTrigger>
+              {/* Shadcn handles menu roles and keyboard nav */}
               <DropdownMenuContent className="p-2" align="start">
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  {" "}
+                  {/* Use asChild for proper link semantics */}
                   <a href="/solutions/netex-cloud" className="flex flex-col">
                     <span className="font-medium">Netex Cloud</span>
                     <span className="text-xs text-muted-foreground">
@@ -35,7 +76,7 @@ const Header = () => {
                     </span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/solutions/netex-studio" className="flex flex-col">
                     <span className="font-medium">Netex Studio</span>
                     <span className="text-xs text-muted-foreground">
@@ -43,7 +84,7 @@ const Header = () => {
                     </span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a
                     href="/solutions/virtual-college"
                     className="flex flex-col"
@@ -56,12 +97,15 @@ const Header = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Resources Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
-                Resources <ChevronDown className="h-4 w-4" />
+                Resources
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/blog" className="flex flex-col">
                     <span className="font-medium">Blog</span>
                     <span className="text-xs text-muted-foreground">
@@ -69,69 +113,159 @@ const Header = () => {
                     </span>
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/case-studies">Case Studies</a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* About Us Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
-                About Us <ChevronDown className="h-4 w-4" />
+                About Us
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/about/company">Company</a>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <a href="/about/careers">Careers</a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
         </div>
+
+        {/* Right side controls */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <Globe className="h-4 w-4" />
-            <span className="sr-only">Language</span>
-          </Button>
-          <Button className="hidden md:flex">
+          <div className="hidden md:flex">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                {/* Button now acts as the trigger */}
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-1 px-2" // Added gap and padding
+                  // Dynamic aria-label indicating action and current state
+                  aria-label={`Change language, current language ${
+                    currentLang === "EN" ? "English" : "Español"
+                  }`}
+                >
+                  <Globe className="h-4 w-4" aria-hidden="true" />
+                  {/* Display the current language abbreviation */}
+                  <span className="text-sm font-medium">{currentLang}</span>
+                  {/* Optional: Add ChevronDown like other dropdowns */}
+                  {/* <ChevronDown className="h-4 w-4 opacity-50" aria-hidden="true" /> */}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {" "}
+                {/* Align menu to the right */}
+                <DropdownMenuItem
+                  onClick={() => handleLangChange("EN")}
+                  // Indicate current selection visually and for AT (optional but good)
+                  aria-current={currentLang === "EN" ? "true" : "false"}
+                  className={currentLang === "EN" ? "font-semibold" : ""} // Example visual cue
+                >
+                  English (EN)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleLangChange("ES")}
+                  aria-current={currentLang === "ES" ? "true" : "false"}
+                  className={currentLang === "ES" ? "font-semibold" : ""} // Example visual cue
+                >
+                  Español (ES)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          {/* Contact Button - Wrap link inside button for consistency or use link styled as button */}
+          <Button asChild className="hidden md:flex">
             <a href="/contact">Contact</a>
           </Button>
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          {/* Mobile Language Toggle Button */}
+          <Button
+            variant="ghost" // Simple visual style
+            size="sm" // Smaller size to fit header
+            className="md:hidden px-2" // Only on mobile, adjust padding
+            onClick={() => handleLangChange(currentLang === "EN" ? "ES" : "EN")} // Toggle logic
+            // Clear aria-label describing action and current state
+            aria-label={`Switch language, current language ${
+              currentLang === "EN" ? "English" : "Español"
+            }`}
+          >
+            {/* Display current language abbreviation */}
+            {currentLang}
+          </Button>
+          {/* Mobile Menu Trigger */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
+              {/* Added aria-controls and ref */}
+              <Button
+                ref={mobileMenuTriggerRef} // Assign ref
+                variant="outline"
+                size="icon"
+                className="md:hidden"
+                aria-label="Open navigation menu" // More descriptive label
+                aria-controls="mobile-menu-content" // Points to the SheetContent id
+                // aria-expanded is handled by Shadcn's SheetTrigger
+              >
+                <Menu className="h-5 w-5" aria-hidden="true" />{" "}
+                {/* Hide decorative icon */}
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col gap-4 p-6">
-                <a href="/solutions" className="text-lg font-medium">
-                  Solutions
-                </a>
-                <a href="/solutions/netex-cloud" className="text-sm pl-4">
+            {/* Mobile Menu Content */}
+            <SheetContent
+              side="right"
+              id="mobile-menu-content" // ID for aria-controls
+              aria-labelledby="mobile-menu-title" // Add a title for the sheet
+            >
+              {/* Added aria-label and a visually hidden title */}
+              <nav
+                aria-label="Mobile navigation"
+                className="flex flex-col gap-4 p-6"
+              >
+                {/* Added a visually hidden title for screen readers */}
+                <h2 id="mobile-menu-title" className="sr-only">
+                  Mobile Navigation Menu
+                </h2>
+
+                {/* Simplified links - removed extra parent links */}
+                <a
+                  href="/solutions/netex-cloud"
+                  className="text-lg font-medium"
+                >
                   Netex Cloud
                 </a>
-                <a href="/solutions/netex-studio" className="text-sm pl-4">
+                <a
+                  href="/solutions/netex-studio"
+                  className="text-lg font-medium"
+                >
                   Netex Studio
                 </a>
-                <a href="/solutions/virtual-college" className="text-sm pl-4">
+                <a
+                  href="/solutions/virtual-college"
+                  className="text-lg font-medium"
+                >
                   Virtual College
                 </a>
-                <a href="/resources" className="text-lg font-medium mt-2">
-                  Resources
+
+                <a href="/blog" className="text-lg font-medium mt-2">
+                  Blog
                 </a>
-                <a href="/about" className="text-lg font-medium mt-2">
-                  About Us
+                <a href="/case-studies" className="text-lg font-medium">
+                  Case Studies
                 </a>
+
+                <a href="/about/company" className="text-lg font-medium mt-2">
+                  Company
+                </a>
+                <a href="/about/careers" className="text-lg font-medium">
+                  Careers
+                </a>
+
                 <a href="/contact" className="text-lg font-medium mt-2">
                   Contact
-                </a>
-                <a
-                  href="/language"
-                  className="text-lg font-medium mt-2 flex items-center gap-2"
-                >
-                  <Globe className="h-4 w-4" /> Language
                 </a>
               </nav>
             </SheetContent>
