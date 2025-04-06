@@ -60,7 +60,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   return (
     <div
       ref={sectionRef}
-      className={`transition-all duration-1000 ${className}`}
+      className={`transition-all duration-1000 ${className} bg-gradient-to-b from-white to-gray-50`}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translate(0)" : getInitialTransform(),

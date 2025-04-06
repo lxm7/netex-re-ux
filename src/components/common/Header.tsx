@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"; // Added useEffect, useRef
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,7 +10,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronDown, Menu, Globe } from "lucide-react";
 import Logo from "./Logo";
 
-const Header = () => {
+interface HeaderProps {
+  children?: React.ReactNode;
+}
+
+const Header = ({ children }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Ref for the mobile menu trigger button
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
@@ -143,6 +147,9 @@ const Header = () => {
 
         {/* Right side controls */}
         <div className="flex items-center gap-4">
+          {/* Voice Search - Desktop */}
+          <div className="hidden md:flex">{children}</div>
+
           <div className="hidden md:flex">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -187,6 +194,10 @@ const Header = () => {
           <Button asChild size="lg" className="hidden md:flex font-bold">
             <a href="/contact">Contact</a>
           </Button>
+
+          {/* Voice Search - Mobile */}
+          <div className="md:hidden">{children}</div>
+
           {/* Mobile Language Toggle Button */}
           <Button
             variant="ghost" // Simple visual style
