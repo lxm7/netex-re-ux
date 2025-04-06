@@ -11,21 +11,28 @@ const WelcomeBanner: React.FC<WelcomeBannerProps> = ({
   userInitial = "A",
 }) => {
   return (
-    <div className="absolute top-0 left-0 right-0 z-30 pt-10 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto">
-        <div className="flex items-center gap-4 bg-black/20 backdrop-blur-sm p-4 rounded-lg">
-          <Avatar className="h-14 w-14 border-2 border-[var(--primary)]">
-            <AvatarFallback className="bg-gray-900 text-white text-xl font-medium">
+    <div className="absolute top-0 left-0 right-0 z-30 sm:h-auto pt-1 px-2 sm:pt-10 sm:px-6 lg:px-8">
+      <div className="container mx-auto h-full">
+        <div
+          className="flex items-center gap-1 h-full bg-black/20
+                     backdrop-blur-sm [@media(max-width:640px)]:p-2 md:p-2 rounded-lg"
+        >
+          <Avatar
+            className="h-6 w-6 sm:h-14 sm:w-14 border-2 
+                       border-[var(--primary)]"
+          >
+            <AvatarFallback className="bg-gray-900 text-white text-xs sm:text-xl font-medium">
               {userInitial}.
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
-            <h2 className="text-xl font-medium text-white">
+          <div className="flex flex-col justify-center">
+            <h2 className="text-xs sm:text-xl font-medium text-white">
               Welcome back, {userName}
             </h2>
             <a
               href="/"
-              className="text-[var(--primary)] hover:text-[var(--primary)] text-sm"
+              className="text-[10px] sm:text-sm text-[var(--primary)]
+                         hover:text-[var(--primary)]"
             >
               Add occupation and interests
             </a>

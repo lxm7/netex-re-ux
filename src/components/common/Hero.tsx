@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
   return (
     <section
       aria-label="Hero introduction"
-      className="relative overflow-hidden h-[90vh] md:h-screen"
+      className="relative overflow-hidden h-screen"
     >
       {/* Video background - fixed position, no parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
@@ -94,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
             Transform Corporate Learning with Integrated E-Learning Solutions
           </h1>
           <p
-            className="font-roboto text-xl text-white md:text-xl"
+            className="font-roboto text-lg text-white md:text-xl"
             style={{
               transform: `translateY(${-translateY * 1.75}px)`,
               transition: "transform 0.1s ease-out",

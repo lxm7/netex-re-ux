@@ -82,7 +82,7 @@ function App() {
       <main className="flex-1 overflow-x-hidden w-full">
         {/* Welcome Banner - Positioned above hero with higher z-index */}
         <div
-          className="fixed top-16 left-0 w-full z-20 px-4 sm:px-6 lg:px-8"
+          className="fixed top-16 left-0 w-full z-20 px-4 sm:px-6 lg:px-4"
           style={{
             opacity: welcomeBannerOpacity,
             transform: `translateY(${Math.max(0, 10 - scrollY * 0.1)}px)`,
