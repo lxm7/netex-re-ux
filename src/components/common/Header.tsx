@@ -59,26 +59,30 @@ const Header = () => {
             {/* Solutions Dropdown */}
             <DropdownMenu>
               {/* Button has implicit aria-haspopup="true" from Shadcn */}
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-bold">
                 Solutions
-                <ChevronDown className="h-4 w-4" aria-hidden="true" />{" "}
-                {/* Hide decorative icon */}
+                <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
               {/* Shadcn handles menu roles and keyboard nav */}
               <DropdownMenuContent className="p-2" align="start">
                 <DropdownMenuItem asChild>
-                  {" "}
                   {/* Use asChild for proper link semantics */}
-                  <a href="/solutions/netex-cloud" className="flex flex-col">
-                    <span className="font-medium">Netex Cloud</span>
+                  <a
+                    href="/solutions/netex-cloud"
+                    className="items-start flex flex-col"
+                  >
+                    <span className="font-bold">Netex Cloud</span>
                     <span className="text-xs text-muted-foreground">
                       Learning Ecosystem
                     </span>
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <a href="/solutions/netex-studio" className="flex flex-col">
-                    <span className="font-medium">Netex Studio</span>
+                  <a
+                    href="/solutions/netex-studio"
+                    className="items-start flex flex-col"
+                  >
+                    <span className="font-bold">Netex Studio</span>
                     <span className="text-xs text-muted-foreground">
                       Bespoke Content Creation
                     </span>
@@ -87,9 +91,9 @@ const Header = () => {
                 <DropdownMenuItem asChild>
                   <a
                     href="/solutions/virtual-college"
-                    className="flex flex-col"
+                    className="items-start flex flex-col"
                   >
-                    <span className="font-medium">Virtual College</span>
+                    <span className="font-bold">Virtual College</span>
                     <span className="text-xs text-muted-foreground">
                       On-Demand Catalogue
                     </span>
@@ -100,14 +104,14 @@ const Header = () => {
 
             {/* Resources Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-bold">
                 Resources
                 <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem asChild>
-                  <a href="/blog" className="flex flex-col">
-                    <span className="font-medium">Blog</span>
+                  <a href="/blog" className="items-start flex flex-col">
+                    <span className="font-bold text-left">Blog</span>
                     <span className="text-xs text-muted-foreground">
                       We Love Learning
                     </span>
@@ -121,7 +125,7 @@ const Header = () => {
 
             {/* About Us Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-bold">
                 About Us
                 <ChevronDown className="h-4 w-4" aria-hidden="true" />
               </DropdownMenuTrigger>
@@ -180,7 +184,7 @@ const Header = () => {
             </DropdownMenu>
           </div>
           {/* Contact Button - Wrap link inside button for consistency or use link styled as button */}
-          <Button asChild className="hidden md:flex">
+          <Button asChild size="lg" className="hidden md:flex font-bold">
             <a href="/contact">Contact</a>
           </Button>
           {/* Mobile Language Toggle Button */}
@@ -264,7 +268,7 @@ const Header = () => {
                   Careers
                 </a>
 
-                <a href="/contact" className="text-lg font-medium mt-2">
+                <a href="/contact" className="text-lg font-bold mt-2">
                   Contact
                 </a>
               </nav>

@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
 
@@ -149,6 +153,12 @@
 }
 
 @theme inline {
+  --font-roboto: "Roboto", sans-serif;
+
+  --font-raleway: "Raleway", sans-serif;
+
+  --font-body: Raleway, sans-serif;
+
   --radius-sm: calc(var(--radius) - 4px);
 
   --radius-md: calc(var(--radius) - 2px);
@@ -260,6 +270,23 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  a,
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+    @apply font-roboto font-bold text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-raleway font-bold text-foreground;
+  }
+  p {
+    @apply font-raleway text-foreground;
   }
   :root {
     --iris-1: #fdfdff;

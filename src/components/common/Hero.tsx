@@ -88,7 +88,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative h-full z-20 flex flex-col justify-center mt-[45px]">
         <div className="max-w-2xl space-y-6">
           <h1
-            className="font-sans text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl text-white"
+            className="font-raleway text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl text-white"
             style={{
               transform: `translateY(${-translateY * 2}px)`,
               transition: "transform 0.1s ease-out",
@@ -97,7 +97,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
             Transform Corporate Learning with Integrated E-Learning Solutions
           </h1>
           <p
-            className="text-xl text-gray-200 md:text-xl"
+            className="font-roboto text-xl text-white md:text-xl"
             style={{
               transform: `translateY(${-translateY * 1.75}px)`,
               transition: "transform 0.1s ease-out",
