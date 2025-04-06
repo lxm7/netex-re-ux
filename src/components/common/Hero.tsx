@@ -38,10 +38,7 @@ const Hero: React.FC<HeroProps> = ({ scrollY }) => {
   return (
     <section
       aria-label="Hero introduction"
-      className="relative overflow-hidden"
-      style={{
-        height: "100vh",
-      }}
+      className="relative overflow-hidden h-[90vh] md:h-screen"
     >
       {/* Video background - fixed position, no parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
